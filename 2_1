@@ -1,0 +1,93 @@
+def task1(x, y):
+        s = input("Знак (+,-,*,/): ")
+        if s == '0':
+            return("Завершение программы")
+        if s in ('+', '-', '*', '/'):
+            if s == '+':
+                print(x + y)
+                return (task1(x + y, y))
+            elif s == '-':
+                print(x - y)
+                return (task1(x - y,  y))
+            elif s == '*':
+                print(x * y)
+                return (task1(x * y, y))
+            elif s == '/':
+                if y != 0:
+                    print(x / y)
+                    return (task1(x / y, y))
+                else:
+                    return ("Деление на ноль!")
+        else:
+            return ("Неверный знак операции!")
+
+print(task1(1, 8))
+
+Задание №2 
+def task2(number, k, odd):
+    if number != 0:
+        if number % 2 == 0:
+            return task2(number // 10, k + 1, odd)
+        else:
+            return task2(number // 10, k, odd + 1)
+    else:
+        print("Количество чётных чисел: ", k, "Количество нечётных чисел: ", odd)
+        return ("")
+print(task2(11116, 0, 0))
+
+Задание №3
+def task3(number, b):
+    if number != 0:
+        if number > 0:
+            b = number % 10
+            print(b, end='')
+            return task3(number // 10, b)
+    elif number == 0:
+        return ("")
+print(task3(123456, 0))
+
+Задание №4
+def task4(number, n, k, a):
+    if k < n:
+        if k != n:
+            return task4(number / -2, n, k + 1, a + number)
+        elif k == n:
+            return("")
+    else:
+        print("", a)
+        return("")
+
+print(task4(1, int(input("Введите N: ")),0, 0))
+
+Задание №5
+def task5(start, end_1):
+    if end_1 != start:
+        if start < end_1:
+            print("%4d-%s" % (start, chr(start)), end='')
+            if start % 10 == 0:
+                print()
+            return task5(start + 1, end_1)
+    elif start == end_1:
+        return("")
+print(task5(32, 128))
+
+Задание №6
+from random import randint
+
+
+def task6(sum_1, i):
+    a = int(input("Введите число: "))
+    if i != 10:
+        if sum_1 == a:
+            print('Вы победили')
+        elif a < sum_1:
+            print('загаданное число больше')
+            return task6(sum_1, i + 1)
+        else:
+            print('загаданное число меньше')
+            return task6(sum_1, i + 1)
+    elif i == 10:
+        print(f'Вы проиграли. Загаданное число {sum_1}')
+        return ("")
+
+print(task6(randint(0, 100), 0))
