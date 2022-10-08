@@ -1,0 +1,132 @@
+Задание №1
+from time import time
+n = 10 ** 5
+
+def decorathion(func):
+    def timer(*args, **kwargs):
+        start = time()
+        result = func(*args, **kwargs)
+        end = time()
+        print(f"Time {func._name_}"
+              f"= {end - start}")
+        return result
+    return timer
+
+
+@decorathion
+def full_list_append(list_1, number_1):
+    for i in number_1:
+        list_1.append(i)
+
+list_2 = []
+full_list_append(list_2, n)
+print('_' * 100)
+
+@decorathion
+def full_list_insert(list_1, number_1):
+    for i in number_1:
+        list_1.insert(0, i)
+
+list_2 = []
+full_list_insert(list_2, n)
+print('_' * 100)
+
+@decorathion
+def full_dict(dict_1, number):
+    for i in range(number):
+        dict_1[i] = i
+
+some_dict = {}
+full_dict(some_dict, n)
+print('_' * 100)
+
+@decorathion
+def changes_List(list_3):
+    for i in range(1000):
+        list_3.pop(i)
+    for j in range(1000):
+        list_3[j] = list_3[j + 1]
+changes_List(list_2)
+print('_' * 100)
+
+Заданеи № 2
+
+from hashlib import sha256
+from sqlite3 import connect, OperationalError
+from os.path import join, dirname
+
+
+class Hash_1:
+    def __init__(self):
+        self.obj = join(dirname(__file__), "1.sqlite")
+        self.con = connect(self.obj)
+        self.crs = self.con.cursor()
+    def creat_table(self):
+        create_1 = "CREAT TABLE usr_inf(login varchar(100)" \
+                    "unique, password varchar(100));"
+        try:
+            self.crs.execute(create_1)
+        except OperationalError:
+            print("Уже создана")
+        else:
+            self.con.commit()
+            print("good")
+
+    @staticmethod
+    def hash_1(self):
+        lg = input("login: ")
+        ps = input("password: ")
+        hash_2 = sha256(lg.encode() + ps.encode()).hexdigest()
+        return (lg, hash_2)
+
+    def reg(self):
+        lg, reg = self.hash_1(self)
+        insert_2 = "INSERT INTO usr_inf(login, password)"\
+                    "VALUES(?, ?)"
+        usr_inf = (lg, reg)
+
+
+    def log(self):
+        lg, chec = self.hash_1(self)
+        select_1 = "SELECT password, FROM usr_inf WHERE lg = ? "
+        self.crs.execute(select_1, (lg,))
+        out = self.crs.fetchone()
+
+        if chec == out[0]:
+            print("It is you")
+        else:
+            print("password  dont raight")
+
+new = Hash_1
+new.creat_table()
+new.reg()
+new.log()
+
+Задание №3
+import hashlib
+
+set_1 = set()
+str_1 = 'hellow'
+for i in range(len(str_1)):
+    for j in range(i + 1, len(str_1) +1 ):
+        if str_1[i:j] != set_1:
+            set_1.add(hashlib.sha256(str_1[i:j].encode()).hexdigest())
+            print(str_1[i:j], end=" ")
+print(f'\n {set_1}')
+print({len(set_1)})
+
+Задание №4
+import hashlib
+
+obj = {}
+salt = uuid4().hex
+
+def cash(url):
+    if obj.get(url):
+        print(f"Адрес есть в кэше {url}")
+    else:
+        result = hashlib.sha256(salt.encode() + url.encode().hexdigest())
+        odj[url] = result
+        print(obj)
+
+cash('https://gb.ru')
